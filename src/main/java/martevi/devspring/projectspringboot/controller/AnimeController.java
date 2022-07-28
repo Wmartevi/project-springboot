@@ -35,6 +35,7 @@ public class AnimeController {
 
     @PostMapping
     public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
+        log.info(animePostRequestBody.getName());
        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 

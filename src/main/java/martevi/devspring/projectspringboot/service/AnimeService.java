@@ -2,6 +2,7 @@ package martevi.devspring.projectspringboot.service;
 
 import lombok.RequiredArgsConstructor;
 import martevi.devspring.projectspringboot.domain.Anime;
+import martevi.devspring.projectspringboot.mapper.AnimeMapper;
 import martevi.devspring.projectspringboot.repository.AnimeRepository;
 import martevi.devspring.projectspringboot.resquests.AnimePostRequestBody;
 import martevi.devspring.projectspringboot.resquests.AnimePutRequestBody;
@@ -28,7 +29,8 @@ public class AnimeService {
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        return animeRepository.save(Anime.builder().name(animePostRequestBody.getName()).build());
+        //return animeRepository.save(Anime.builder().name(animePostRequestBody.getName()).build());
+        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
 
     public void delete(long id) {
@@ -37,10 +39,12 @@ public class AnimeService {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime =  findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        Anime anime = Anime.builder()
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        anime.setId(savedAnime.getId());
+        /*Anime anime = Anime.builder()
                 .id(savedAnime.getId())
                 .name(animePutRequestBody.getName())
-                .build();
+                .build();*/
         animeRepository.save(anime);
     }
 }
