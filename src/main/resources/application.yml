@@ -3,9 +3,10 @@ server:
     include-stacktrace: on_param
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3312/anime?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3312/anime?createDatabaseIfNotExist=true
     username: root
     password: root
   jpa:
     hibernate:
       ddl-auto: update
+    show-sql: true

@@ -2,6 +2,7 @@ package martevi.devspring.projectspringboot.service;
 
 import lombok.RequiredArgsConstructor;
 import martevi.devspring.projectspringboot.domain.Anime;
+import martevi.devspring.projectspringboot.exception.BadRequestException;
 import martevi.devspring.projectspringboot.mapper.AnimeMapper;
 import martevi.devspring.projectspringboot.repository.AnimeRepository;
 import martevi.devspring.projectspringboot.resquests.AnimePostRequestBody;
@@ -23,9 +24,14 @@ public class AnimeService {
 
     }
 
+    public List<Anime> findByName(String name){
+        return animeRepository.findByName(name);
+
+    }
+
     public Anime findByIdOrThrowBadRequestException(long id){
         return animeRepository.findById(id)
-               .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found"));
+               .orElseThrow(() -> new BadRequestException("Anime not Found"));
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
